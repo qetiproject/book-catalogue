@@ -3,5 +3,8 @@
     "AUTH": {
         "SIGN_IN": "Sign In",
         "SIGN_UP": "Sign Up"
+    },
+    "HEADER": {
+        "SEARCH": "Search"
     }
 }
