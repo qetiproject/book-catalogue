@@ -1,0 +1,15 @@
+.lang {
+    border: none;
+    outline: none;
+    width: 32px;
+    height: 32px;
+    &.ka {
+        background: url("/assets/img/ka.png");
+    }
+    &.en {
+        background: url("/assets/img/en.png");
+    }
+    &.inactive {
+        filter: grayscale(100%);
+    }
+}

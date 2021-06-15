@@ -1,10 +1,12 @@
 {
-    "TITLE": "Book Catalogue",
-    "AUTH": {
+    "header": {
+        "TITLE": "Book Catalogue"
+    },
+    "auth": {
         "SIGN_IN": "Sign In",
         "SIGN_UP": "Sign Up"
     },
-    "HEADER": {
-        "SEARCH": "Search"
+    "errors": {
+        "NOT_FOUND": "Page not found"
     }
 }

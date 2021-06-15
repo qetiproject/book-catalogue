@@ -1,22 +1,22 @@
-<div class="row">
-    <div class="col-md-2">
-        <img src="./../../../assets/img/logo.png" alt="logo" />
+<header>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center">
+                <img src="../../../assets/img/logo.png" alt="logo" />
+                <strong class="m-1">{{ "header.TITLE" | translate }}</strong>
+            </a>
+            <div class="d-flex align-items-center">
+                <ng-container>
+                    <button (click)="goToSignIn()" class="btn btn-outline-light">
+            {{ "auth.SIGN_IN" | translate }}
+          </button>
+                    <button (click)="goToSignUp()" class="btn btn-outline-light">
+            {{ "auth.SIGN_UP" | translate }}
+          </button>
+                </ng-container>
+                <button class="lang en ms-2" [class.inactive]="isKa" (click)="en()"></button>
+                <button class="lang ka ms-2" [class.inactive]="isEn" (click)="ka()"></button>
+            </div>
+        </div>
     </div>
-    <nav class="navbar col-md-8">
-        <!-- <form class="form-inline d-flex">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-success my-2 my-sm-0" type="submit">{{ "HEADER.SEARCH" | translate}}</button>
-        </form> -->
-        menu
-    </nav>
-    <div>
-        <button class="btn btn-primaary">{{'AUTH.SIGN_IN' | translate}}</button>
-        <!-- <select>
-          <option [value]="language.kA" aria-checked="true" (click)="ka()">{{ language[0]}}</option>
-          <option [value]="language.EN" (click)="en($event.target.value)">{{ language[1]}}</option>
-        </select> -->
-
-        <button (click)="en()" class="btn btn-primary">en</button>
-        <button (click)="ka()" class="btn btn-primary">ka</button>
-    </div>
-</div>
+</header>

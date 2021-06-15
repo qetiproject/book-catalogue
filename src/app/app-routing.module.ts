@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ErrorComponent } from './shared/error/error.component';
+import { HeaderComponent, NotFoundComponent } from './shell';
 
 const routes: Routes = [
   {
@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: ErrorComponent
+    component: NotFoundComponent
   }
 ];
 
@@ -23,4 +23,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+  header = HeaderComponent
+}
