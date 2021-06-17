@@ -4,7 +4,11 @@
     },
     "auth": {
         "SIGN_IN": "Sign In",
-        "SIGN_UP": "Sign Up"
+        "SIGN_UP": "Sign Up",
+        "EMAIL": "Email",
+        "PASSWORD": "Password",
+        "REPEAT_PASSWORD": "Repeat password",
+        "SIGN_OUT": "Sign Out"
     },
     "errors": {
         "NOT_FOUND": "Page not found"
