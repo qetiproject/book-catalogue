@@ -2,12 +2,12 @@
   <section class="py-3 text-center middle">
     <div class="col-lg-6 col-md-8 mx-auto">
       <h1 class="fw-light text-white">
-        add
+        {{ "catalogue.ADD_BOOK" | translate }}
       </h1>
     </div>
   </section>
 
-  <button >log</button>
+  <!-- <button>log</button> -->
 
   <div class="py-5">
     <div class="container d-flex justify-content-center flex-column w-100">
@@ -16,34 +16,36 @@
           <input
             type="text"
             class="form-control"
-            placeholder="enter book name"
+            [(ngModel)]="searchKey"
+            placeholder="{{ 'catalogue.ENTER_BOOK_NAME' | translate }}"
           />
           <button
             class="btn btn-outline-secondary mt-2"
-            
+            (click)="search(searchKey)"
           >
-            search
+            {{ "catalogue.SEARCH" | translate }}
           </button>
-          <div class="alert alert-danger mt-2" role="alert" >
-           error
+          <div class="alert alert-danger mt-2" role="alert">
+            {{ "errors.ENTER_BOOK_NAME" | translate }}
           </div>
         </div>
       </div>
       <div class="row d-flex justify-content-center mt-2 flex-row mb-3">
         <div class="d-flex justify-content-center">
           <span
-          
+            (click)="fetchBook(name)"
             class="badge rounded-pill bg-success ms-1"
-          >name</span>
+            *ngFor="let name of lastThreeSearches"
+            >{{ name }}</span
+          >
         </div>
       </div>
-      <div class="row">
-        <form >
+      <!-- <div class="row">
+        <form>
           <div class="row mb-3">
             <label for="review" class="col-sm-2 col-form-label">Review</label>
             <div class="col-sm-10">
               <textarea
-                
                 type="email"
                 class="form-control"
                 id="review"
@@ -53,13 +55,8 @@
           <div class="row mb-3">
             <label for="rating" class="col-sm-2 col-form-label">Rating</label>
             <div class="col-sm-10">
-              <span class="ms-2" >
-                <input
-                  type="radio"
-                  class="form-check-input"
-                 
-                  
-                />
+              <span class="ms-2">
+                <input type="radio" class="form-check-input" />
               </span>
             </div>
           </div>
@@ -67,43 +64,25 @@
             <label for="status" class="col-sm-2 col-form-label">Status</label>
             <div class="col-sm-10">
               <select class="form-select" formControlName="status">
-                <option >
-                  option
-                </option>
-                <option >
-                 option
-                </option>
+                <option>option</option>
+                <option>option</option>
               </select>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">
-            Add
-          </button>
-          <ng-container >
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              
-            >
+          <button type="submit" class="btn btn-primary">Add</button>
+          <ng-container>
+            <div class="alert alert-danger mt-2" role="alert">
               რევიუ სავალდებულოა
             </div>
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              
-            >
+            <div class="alert alert-danger mt-2" role="alert">
               განხილვა უნდა იყოს მინიმუმ 10 სიმბოლო
             </div>
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              
-            >
+            <div class="alert alert-danger mt-2" role="alert">
               ტესტი არ არის 'გიორგი'
             </div>
           </ng-container>
         </form>
-      </div>
+      </div> -->
     </div>
   </div>
 </main>

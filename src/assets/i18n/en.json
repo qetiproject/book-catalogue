@@ -10,7 +10,13 @@
         "REPEAT_PASSWORD": "Repeat password",
         "SIGN_OUT": "Sign Out"
     },
+    "catalogue": {
+      "ADD_BOOK": "Add Book",
+      "SEARCH": "search",
+      "ENTER_BOOK_NAME": "Enter Book Name"
+    },
     "errors": {
-        "NOT_FOUND": "Page not found"
+        "NOT_FOUND": "Page not found",
+        "ENTER_BOOK_NAME": "Enter Book Name"
     }
 }
