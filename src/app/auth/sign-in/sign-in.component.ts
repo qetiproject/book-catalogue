@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
+import { from } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 export interface SignInForm {
   email: string;
@@ -10,26 +13,25 @@ export interface SignInForm {
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent implements OnInit {
-
   constructor(
     private router: Router,
-    private auth: AuthService
-  ) { }
+    private auth: AuthService,
+    private loadingService: LoadingService
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  signIn({email, password}: SignInForm) {
-    if( !email || !password){
+  signIn({ email, password }: SignInForm) {
+    if (!email || !password) {
       return;
     }
-    
-    this.auth.signIn({email, password}).then(() => {
-      this.router.navigate(['catalogue'])
-    })
-  }
 
+    this.loadingService.start();
+    from(this.auth.signIn({ email, password }))
+      .pipe(finalize(() => this.loadingService.stop()))
+      .subscribe(() => this.router.navigate(['catalogue']));
+  }
 }

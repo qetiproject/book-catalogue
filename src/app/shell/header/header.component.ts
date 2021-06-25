@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { Language } from 'src/app/shared/modules/language.enum';
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -11,11 +9,6 @@ import { Language } from 'src/app/shared/modules/language.enum';
 })
 export class HeaderComponent implements OnInit {
 
-  public language = Language;
-  public languages: Language[] = [
-    Language.kA,
-    Language.EN
-  ]
   constructor(
     private translateService: TranslateService,
     private router: Router,
