@@ -7,8 +7,6 @@
     </div>
   </section>
 
-  <!-- <button>log</button> -->
-
   <div class="py-5">
     <div class="container d-flex justify-content-center flex-column w-100">
       <div class="row d-flex justify-content-center">
@@ -25,7 +23,7 @@
           >
             {{ "catalogue.SEARCH" | translate }}
           </button>
-          <div class="alert alert-danger mt-2" role="alert">
+          <div class="alert alert-danger mt-2" role="alert" *ngIf="hasError">
             {{ "errors.ENTER_BOOK_NAME" | translate }}
           </div>
         </div>
@@ -40,23 +38,30 @@
           >
         </div>
       </div>
-      <!-- <div class="row">
-        <form>
+      <div class="row">
+        <form [formGroup]="form">
           <div class="row mb-3">
             <label for="review" class="col-sm-2 col-form-label">Review</label>
             <div class="col-sm-10">
               <textarea
-                type="email"
+                type="text"
                 class="form-control"
                 id="review"
+                formControlName="review"
               ></textarea>
             </div>
           </div>
           <div class="row mb-3">
             <label for="rating" class="col-sm-2 col-form-label">Rating</label>
             <div class="col-sm-10">
-              <span class="ms-2">
-                <input type="radio" class="form-check-input" />
+              <span class="ms-2" *ngFor="let rating of ratings">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  [value]="rating"
+                  name="rating"
+                  formControlName="rating"
+                />
               </span>
             </div>
           </div>
@@ -64,25 +69,36 @@
             <label for="status" class="col-sm-2 col-form-label">Status</label>
             <div class="col-sm-10">
               <select class="form-select" formControlName="status">
-                <option>option</option>
-                <option>option</option>
+                <option [value]="status.Read">
+                  {{ "catalogue.READ" | translate }}
+                </option>
+                <option [value]="status.ReadLater">
+                  {{ "catalogue.READ_LATER" | translate }}
+                </option>
               </select>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">Add</button>
-          <ng-container>
-            <div class="alert alert-danger mt-2" role="alert">
+          <button type="submit" class="btn btn-primary" (click)="submit()">
+            Add
+          </button>
+          <ng-container *ngIf="submited && form.invalid">
+            <div
+              class="alert alert-danger mt-2"
+              role="alert"
+              *ngIf="form.controls.review?.errors?.required"
+            >
               რევიუ სავალდებულოა
             </div>
-            <div class="alert alert-danger mt-2" role="alert">
+            <div
+              class="alert alert-danger mt-2"
+              role="alert"
+              *ngIf="form.controls.review?.errors?.minlength"
+            >
               განხილვა უნდა იყოს მინიმუმ 10 სიმბოლო
-            </div>
-            <div class="alert alert-danger mt-2" role="alert">
-              ტესტი არ არის 'გიორგი'
             </div>
           </ng-container>
         </form>
-      </div> -->
+      </div>
     </div>
   </div>
 </main>

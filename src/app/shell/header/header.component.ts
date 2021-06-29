@@ -5,18 +5,16 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-
   constructor(
     private translateService: TranslateService,
     private router: Router,
     private auth: AuthService
-  ) { }
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   get isKa(): boolean {
     return this.isLanguage('ka');
@@ -30,6 +28,10 @@ export class HeaderComponent implements OnInit {
     return this.auth.isLoggedIn;
   }
 
+  get isInitiated(): boolean {
+    return this.auth.initiated;
+  }
+
   en() {
     this.translateService.use('en');
   }
@@ -38,7 +40,6 @@ export class HeaderComponent implements OnInit {
     this.translateService.use('ka');
   }
 
-  
   goToSignIn() {
     this.router.navigate(['sign-in']);
   }
@@ -49,8 +50,8 @@ export class HeaderComponent implements OnInit {
 
   signOut() {
     this.auth.signOut().then(() => {
-      this.router.navigate(['sign-in'])
-    })
+      this.router.navigate(['sign-in']);
+    });
   }
 
   private isLanguage(lang: string): boolean {
@@ -59,7 +60,4 @@ export class HeaderComponent implements OnInit {
 
     return currentLang ? currentLang === lang : defaultLang === lang;
   }
-
- 
-
 }

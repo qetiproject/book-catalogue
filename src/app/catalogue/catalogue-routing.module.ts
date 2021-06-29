@@ -5,7 +5,7 @@ import { AddBookComponent } from './add-book/add-book.component';
 const routes: Routes = [
   {
     path: '',
-    component: CatalogueComponent
+    component: CatalogueComponent,
   },
   {
     path: 'add',
@@ -15,6 +15,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class CatalogueRoutingModule { }
+export class CatalogueRoutingModule {}

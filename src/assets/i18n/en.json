@@ -12,8 +12,10 @@
     },
     "catalogue": {
       "ADD_BOOK": "Add Book",
-      "SEARCH": "search",
-      "ENTER_BOOK_NAME": "Enter Book Name"
+      "SEARCH": "Search",
+      "ENTER_BOOK_NAME": "Enter Book Name",
+      "READ": "Read",
+      "READ_LATER": "Read Later"
     },
     "errors": {
         "NOT_FOUND": "Page not found",

@@ -1,25 +1,35 @@
 <header>
-    <div class="navbar navbar-dark bg-dark shadow-sm">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center">
-                <img src="../../../assets/img/logo.png" alt="logo" />
-                <strong class="m-1">{{ "header.TITLE" | translate }}</strong>
-            </a>
-            <div class="d-flex align-items-center">
-                <ng-container *ngIf="!isLoggedIn">
-                    <button (click)="goToSignIn()" class="btn btn-outline-light">
-            {{ "auth.SIGN_IN" | translate }}
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center">
+        <img src="../../../assets/img/logo.png" alt="logo" />
+        <strong class="m-1">{{ "header.TITLE" | translate }}</strong>
+      </a>
+      <div class="d-flex align-items-center">
+        <ng-container *ngIf="isInitiated">
+          <ng-container *ngIf="!isLoggedIn">
+            <button (click)="goToSignIn()" class="btn btn-outline-light">
+              {{ "auth.SIGN_IN" | translate }}
+            </button>
+            <button (click)="goToSignUp()" class="btn btn-outline-light">
+              {{ "auth.SIGN_UP" | translate }}
+            </button>
+          </ng-container>
+          <button *ngIf="isLoggedIn" (click)="signOut()" class="btn btn-danger">
+            {{ "auth.SIGN_OUT" | translate }}
           </button>
-                    <button (click)="goToSignUp()" class="btn btn-outline-light">
-            {{ "auth.SIGN_UP" | translate }}
-          </button>
-                </ng-container>
-                <button *ngIf="isLoggedIn" (click)="signOut()" class="btn btn-danger">
-                    {{ "auth.SIGN_OUT" | translate }}
-                  </button>
-                <button class="lang en ms-2" [class.inactive]="isKa" (click)="en()"></button>
-                <button class="lang ka ms-2" [class.inactive]="isEn" (click)="ka()"></button>
-            </div>
-        </div>
+        </ng-container>
+        <button
+          class="lang en ms-2"
+          [class.inactive]="isKa"
+          (click)="en()"
+        ></button>
+        <button
+          class="lang ka ms-2"
+          [class.inactive]="isEn"
+          (click)="ka()"
+        ></button>
+      </div>
     </div>
+  </div>
 </header>

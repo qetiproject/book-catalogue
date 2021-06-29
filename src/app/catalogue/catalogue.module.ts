@@ -4,12 +4,18 @@ import { CatalogueComponent } from './catalogue.component';
 import { CatalogueRoutingModule } from './catalogue-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AddBookComponent } from './add-book/add-book.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookApiService, BOOK_BASE_URL } from './services';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
-  imports: [CommonModule, CatalogueRoutingModule, TranslateModule, FormsModule],
+  imports: [
+    CommonModule,
+    CatalogueRoutingModule,
+    TranslateModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   declarations: [CatalogueComponent, AddBookComponent],
   providers: [
     BookApiService,

@@ -8,34 +8,39 @@ interface User {
   email: string;
 }
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   private _user: User;
 
   get isLoggedIn(): boolean {
     return !!this._user;
   }
 
-  constructor(
-    private auth: AngularFireAuth
-  ) { 
-    this.auth.onAuthStateChanged((user) => {
-      this._user = user;
-    })
+  private _initiated = false;
+
+  get initiated(): boolean {
+    return this._initiated;
   }
 
-  signIn({email, password}: SignInForm) {
+  constructor(private auth: AngularFireAuth) {
+    this.auth.onAuthStateChanged((user) => {
+      this._user = user;
+      if (!this._initiated) {
+        this._initiated = true;
+      }
+    });
+  }
+
+  signIn({ email, password }: SignInForm) {
     return this.auth.signInWithEmailAndPassword(email, password);
   }
 
-  signUp({email, password}: SignUpForm) {
+  signUp({ email, password }: SignUpForm) {
     return this.auth.createUserWithEmailAndPassword(email, password);
   }
 
   signOut() {
     return this.auth.signOut();
   }
-
 }

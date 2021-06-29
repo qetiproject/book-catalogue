@@ -14,5 +14,4 @@ export class BookApiService {
   getBookByName(name: string): Observable<any> {
     return this.http.get(`${this.baseUrl}?q=${name}`);
   }
-  //  https://www.googleapis.com/books/v1/volumes/${name}?key=AIzaSyD-cADJV6R7xPXtzi9Q-Em8UaTcCKPW-KY
 }
