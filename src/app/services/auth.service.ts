@@ -23,6 +23,10 @@ export class AuthService {
     return this._initiated;
   }
 
+  get userId(): string {
+    return this._user.uid;
+  }
+
   constructor(private auth: AngularFireAuth) {
     this.auth.onAuthStateChanged((user) => {
       this._user = user;

@@ -11,14 +11,37 @@
         "SIGN_OUT": "Sign Out"
     },
     "catalogue": {
-      "ADD_BOOK": "Add Book",
-      "SEARCH": "Search",
-      "ENTER_BOOK_NAME": "Enter Book Name",
-      "READ": "Read",
-      "READ_LATER": "Read Later"
+      "add_book": {
+        "TITLE": "Add Book",
+        "ENTER_BOOK_NAME": "Enter book name",
+        "READ": "Read",
+        "READ_LATER": "Read Later",
+        "REVIEW": "Review",
+        "STATUS": "Status",
+        "RATING": "Rating",
+        "buttons": {
+          "SEARCH": "Search",
+          "ADD": "Add"
+        },
+        "whenToRead": {
+          "TITLE": "When to read",
+          "SELECT": "Select",
+          "TOMORROW": "Tomorrow",
+          "THIS_WEEK" :"This Week",
+          "THIS_MONTH": "This Month",
+          "THIS_YEAR": "This Year"
+        }
+      },
+      "errors": {
+        "add_book": {
+          "ENTER_BOOK_NAME": "Enter book name",
+          "REVIEW_IS_REQUIRED": "Review is required",
+          "REVIEW_LENGTH": "Review must be min 10 characters"
+        }
+
+      }
     },
     "errors": {
-        "NOT_FOUND": "Page not found",
-        "ENTER_BOOK_NAME": "Enter Book Name"
+        "NOT_FOUND": "Page not found"
     }
 }

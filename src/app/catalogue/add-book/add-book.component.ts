@@ -1,11 +1,20 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subject, Subscription } from 'rxjs';
-import { finalize, takeUntil } from 'rxjs/operators';
+import { forkJoin, from, Observable, of, Subject, Subscription } from 'rxjs';
+import { finalize, map, switchMap, takeUntil } from 'rxjs/operators';
 import { LoadingService } from 'src/app/services/loading.service';
 import { StorageService } from 'src/app/services/storage.service';
-import { Status } from '../catalogue.model';
+import { Book, BookResult, Country, CountryResult } from '../book.model';
+import {
+  BookBody,
+  RATINGS,
+  Status,
+  WhenToReadSelect,
+  WHEN_TO_READ,
+} from '../catalogue.model';
 import { BookApiService } from '../services';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-add-book',
@@ -14,19 +23,40 @@ import { BookApiService } from '../services';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
   private unsibscribe$ = new Subject();
+
   searchKey: string;
   hasError: boolean;
   lastThreeSearches: string[] = [];
+
   form: FormGroup;
   status = Status;
-  ratings = [1, 2, 3, 4, 5];
   submited = false;
-  subs: Subscription[] = [];
+  countries: string[] = [];
+
+  private _selectedBook: Book;
+
+  get selectedBook(): Book {
+    return this._selectedBook;
+  }
+
+  get canReadLater(): boolean {
+    return !!this.form.get('whenToRead');
+  }
+
+  get whenToRead(): WhenToReadSelect[] {
+    return WHEN_TO_READ;
+  }
+
+  get ratings(): number[] {
+    return RATINGS;
+  }
 
   constructor(
     private bookService: BookApiService,
     private loadingService: LoadingService,
-    private storage: StorageService
+    private storage: StorageService,
+    private store: AngularFirestore,
+    private authService: AuthService
   ) {}
 
   private addToLastSearches(name: string) {
@@ -60,30 +90,104 @@ export class AddBookComponent implements OnInit, OnDestroy {
     this.form
       .get('review')
       .valueChanges.pipe(takeUntil(this.unsibscribe$))
-      .subscribe((form) => console.log(form));
+      .subscribe();
 
     this.form
       .get('rating')
       .valueChanges.pipe(takeUntil(this.unsibscribe$))
-      .subscribe((form) => console.log(form));
+      .subscribe();
 
     this.form
       .get('status')
       .valueChanges.pipe(takeUntil(this.unsibscribe$))
-      .subscribe((form) => console.log(form));
+      .subscribe();
   }
 
   ngOnInit(): void {
     this.restoreState();
     this.createForm();
+
+    this.form
+      .get('status')
+      .valueChanges.pipe(takeUntil(this.unsibscribe$))
+      .subscribe((status) => this.addControlsByStatus(status));
   }
 
+  private getCountryWithPopulation(code: string): Observable<Country> {
+    return this.bookService.getCountry(code).pipe(
+      map((c) => {
+        const countryFirst = c[0];
+        return {
+          code: countryFirst.alpha2Code,
+          population: countryFirst.population,
+        };
+      })
+    );
+  }
+
+  getCountryFlag(code: string): string {
+    return `https://www.countryflags.io/${code}/shiny/64.png`;
+  }
+
+  getCountryPopulation(country: Country): string {
+    return `Popultion of ${country.code}: ${country.population}`;
+  }
+
+  private mapBook(book: BookResult, countries: Country[]): Book {
+    return {
+      accessInfo: {
+        pdf: book.items[0].accessInfo.pdf,
+        webReaderLink: book.items[0].accessInfo.webReaderLink,
+        country: countries,
+      },
+      textSnippet: book.items[0].searchInfo?.textSnippet,
+      volumeInfo: {
+        title: book.items[0].volumeInfo.title,
+        authors: book.items[0].volumeInfo.authors,
+        publisher: book.items[0].volumeInfo.publisher,
+        publishedDate: book.items[0].volumeInfo.publishedDate,
+        description: book.items[0].volumeInfo.description,
+        printType: book.items[0].volumeInfo.printType,
+        pageCount: book.items[0].volumeInfo.pageCount,
+        contentVersion: book.items[0].volumeInfo.contentVersion,
+        language: book.items[0].volumeInfo.language,
+        previewLink: book.items[0].volumeInfo.previewLink,
+        categories: book.items[0].volumeInfo.categories,
+        imageLinks: {
+          thumbnail: book.items[0].volumeInfo.imageLinks?.thumbnail,
+          smallThumbnail: book.items[0].volumeInfo.imageLinks?.smallThumbnail,
+        },
+      },
+      saleInfo: {
+        buyLink: book.items[0].saleInfo.buyLink,
+        isEbook: book.items[0].saleInfo.isEbook,
+        saleability: book.items[0].saleInfo.saleability,
+      },
+      id: book.items[0].id,
+    };
+  }
+
+  //TODO: make error handly
   fetchBook(name: string) {
     this.loadingService.start();
     this.bookService
       .getBookByName(name)
-      .pipe(finalize(() => (this.loadingService.stop(), (this.searchKey = ''))))
-      .subscribe((x) => console.log(x));
+      .pipe(
+        finalize(() => {
+          this.loadingService.stop(), (this.searchKey = '');
+        }),
+        switchMap((book) => {
+          const bookByName = book.items[0];
+          this.countries = [];
+          this.countries.push(bookByName.accessInfo.country);
+          return forkJoin(
+            this.countries.map((code) => this.getCountryWithPopulation(code))
+          ).pipe(
+            map<Country[], Book>((countries) => this.mapBook(book, countries))
+          );
+        })
+      )
+      .subscribe((book) => (this._selectedBook = book));
   }
 
   search(key: string) {
@@ -99,10 +203,45 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   submit() {
     this.submited = true;
+
+    if (this.form.invalid) {
+      return;
+    }
+
+    const value = this.form.value;
+
+    const body: BookBody = {
+      id: this._selectedBook.id,
+      uid: this.authService.userId,
+      rating: value.rating,
+      review: value.review,
+      status: value.status,
+      whenToRead: value.whenToRead || '',
+    };
+
+    // loading ar irtveba
+    this.loadingService.start();
+    from(this.store.collection('catalogue').add(body))
+      .pipe(finalize(() => this.loadingService.stop()))
+      .subscribe();
   }
 
   ngOnDestroy() {
     this.unsibscribe$.next();
     this.unsibscribe$.unsubscribe();
+  }
+
+  private addControlsByStatus(status: Status) {
+    switch (status) {
+      case Status.ReadLater:
+        this.form.addControl(
+          'whenToRead',
+          new FormControl(null, Validators.required)
+        );
+        break;
+      case Status.Read:
+        this.form.removeControl('whenToRead');
+        break;
+    }
   }
 }

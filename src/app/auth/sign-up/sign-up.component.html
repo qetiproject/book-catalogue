@@ -5,9 +5,12 @@
     </div>
   </section>
   <section class="py-5 d-flex justify-content-center">
-    <form (ngSubmit)="signUp(form)" #form="ngForm">
+    <form
+      (ngSubmit)="signUp(form)"
+      #form="ngForm"
+      [mustMatch]="['password', 'repeatPassword']"
+    >
       <div class="form-floating mb-2">
-        <!-- [mustMatch]="['password', 'repeatPassword']" -->
         <input
           type="email"
           ngModel

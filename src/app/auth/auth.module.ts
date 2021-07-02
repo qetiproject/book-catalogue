@@ -5,17 +5,16 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [
-    SignInComponent,
-    SignUpComponent
-  ],
+  declarations: [SignInComponent, SignUpComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
     TranslateModule,
-    FormsModule
-  ]
+    FormsModule,
+    SharedModule,
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

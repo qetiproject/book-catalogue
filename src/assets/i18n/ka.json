@@ -11,15 +11,36 @@
         "SIGN_OUT": "გამოსვლა"
     },
     "catalogue": {
-      "ADD_BOOK": "წიგნის დამატება",
-      "SEARCH": "ძებნა",
-      "ENTER_BOOK_NAME": "შეიყვანეთ წიგნის სახელი",
-      "READ": "წაკითხული",
-      "READ_LATER": "მოგვიანებით წასაკითხი"
+      "add_book": {
+        "TITLE": "წიგნის დამატება",
+        "ENTER_BOOK_NAME": "შეიყვანეთ წიგნის სახელი",
+        "READ": "წაკითხული",
+        "READ_LATER": "მოგვიანებით წასაკითხი",
+        "REVIEW": "განხილვა",
+        "STATUS": "სტატუსი",
+        "RATING": "რეიტინგი",
+        "buttons": {
+          "SEARCH": "ძებნა",
+          "ADD": "დამატება"
+        },
+        "whenToRead": {
+          "TITLE": "წასაკითხი",
+          "SELECT": "არჩევა",
+          "TOMORROW": "ხვალ",
+          "THIS_WEEK" :"ამ კვირას",
+          "THIS_MONTH": "ამ თვეს",
+          "THIS_YEAR": "ამ წელს"
+        }
+      },
+      "errors": {
+        "add_book": {
+          "ENTER_BOOK_NAME": "გთხოვთ მიუთითოთ წიგნის სახელი",
+          "REVIEW_IS_REQUIRED": "განხილვა სავალდებულოა",
+          "REVIEW_LENGTH": "განხილვა უნდა იყოს მინიმუმ 10 სიმბოლო"
+        }
+      }
     },
     "errors": {
-        "NOT_FOUND": "გვერდი ვერ მოიძებნა",
-        "ENTER_BOOK_NAME": "გთხოვთ მიუთითოთ წიგნის სახელი"
-
+        "NOT_FOUND": "გვერდი ვერ მოიძებნა"
     }
 }
