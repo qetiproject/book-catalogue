@@ -1,10 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { forkJoin, from, Observable, of, Subject, Subscription } from 'rxjs';
-import { finalize, map, switchMap, takeUntil } from 'rxjs/operators';
+import { EMPTY, forkJoin, from, Observable, of, Subject } from 'rxjs';
+import {
+  catchError,
+  finalize,
+  map,
+  switchMap,
+  takeUntil,
+} from 'rxjs/operators';
 import { LoadingService } from 'src/app/services/loading.service';
 import { StorageService } from 'src/app/services/storage.service';
-import { Book, BookResult, Country, CountryResult } from '../book.model';
+import { Book, BookResult, Country } from '../book.model';
 import {
   BookBody,
   RATINGS,
@@ -15,6 +21,9 @@ import {
 import { BookApiService } from '../services';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth.service';
+// import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-book',
@@ -56,7 +65,9 @@ export class AddBookComponent implements OnInit, OnDestroy {
     private loadingService: LoadingService,
     private storage: StorageService,
     private store: AngularFirestore,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private translateService: TranslateService
   ) {}
 
   private addToLastSearches(name: string) {
@@ -121,6 +132,9 @@ export class AddBookComponent implements OnInit, OnDestroy {
           code: countryFirst.alpha2Code,
           population: countryFirst.population,
         };
+      }),
+      catchError(() => {
+        return of(null);
       })
     );
   }
@@ -223,7 +237,21 @@ export class AddBookComponent implements OnInit, OnDestroy {
     this.loadingService.start();
     from(this.store.collection('catalogue').add(body))
       .pipe(finalize(() => this.loadingService.stop()))
-      .subscribe();
+      .subscribe(() => this.reset());
+  }
+
+  // toastr: not styled
+  private reset() {
+    this._selectedBook = null;
+    this.form.reset();
+    this.form.updateValueAndValidity();
+    this.submited = false;
+    this.form.get('review').setValue('');
+    this.form.get('rating').setValue(1);
+    this.form.get('status').setValue(Status.Read);
+    this.translateService
+      .get('catalogue.add_book.BOOK_HAS_BEEN_ADDED')
+      .subscribe((value) => this.toastr.success(value));
   }
 
   ngOnDestroy() {

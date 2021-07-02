@@ -48,14 +48,16 @@
             <p>category: {{ category }}</p>
           </div>
           <div *ngFor="let country of selectedBook.accessInfo.country">
-            <img
-              [src]="getCountryFlag(country.code)"
-              [title]="getCountryPopulation(country)"
-            />
+            <ng-container *ngIf="country">
+              <img
+                [src]="getCountryFlag(country.code)"
+                [title]="getCountryPopulation(country)"
+              />
+            </ng-container>
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="selectedBook">
         <form [formGroup]="form">
           <div class="row mb-3">
             <label for="review" class="col-sm-2 col-form-label">

@@ -10,6 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { ShellModule } from './shell/shell.module';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from './shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 export function TranslateHttpLoaderFactory(
   http: HttpClient
@@ -25,6 +27,8 @@ export function TranslateHttpLoaderFactory(
     AppRoutingModule,
     ShellModule,
     SharedModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

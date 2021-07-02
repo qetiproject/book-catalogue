@@ -30,7 +30,8 @@
           "THIS_WEEK" :"ამ კვირას",
           "THIS_MONTH": "ამ თვეს",
           "THIS_YEAR": "ამ წელს"
-        }
+        },
+        "BOOK_HAS_BEEN_ADDED": "წიგნი დამატებულია"
       },
       "errors": {
         "add_book": {
