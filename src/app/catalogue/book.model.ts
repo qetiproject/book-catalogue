@@ -1,3 +1,5 @@
+import { BookBody } from './catalogue.model';
+
 export interface Pdf {
   isAvailable: boolean;
 }
@@ -66,4 +68,9 @@ export interface Country {
 export interface CountryResult {
   alpha2Code: string;
   population: number;
+}
+
+export interface BookListItem {
+  data: BookBody;
+  book: BookData;
 }

@@ -5,8 +5,10 @@ import { CatalogueRoutingModule } from './catalogue-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AddBookComponent } from './add-book/add-book.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BookApiService, BOOK_BASE_URL } from './services';
+import { BookApiService, BOOK_BASE_URL, FireApiService } from './services';
 import { environment } from 'src/environments/environment';
+import { BookListComponent } from './book-list/book-list.component';
+import { BookListItemComponent } from './book-list/book-list-item/book-list-item.component';
 
 @NgModule({
   imports: [
@@ -16,9 +18,17 @@ import { environment } from 'src/environments/environment';
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [CatalogueComponent, AddBookComponent],
+  declarations: [
+    CatalogueComponent,
+    AddBookComponent,
+    BookListComponent,
+    BookListItemComponent,
+    BookListComponent,
+    BookListItemComponent,
+  ],
   providers: [
     BookApiService,
+    FireApiService,
     {
       provide: BOOK_BASE_URL,
       useValue: environment.bookApiBase,

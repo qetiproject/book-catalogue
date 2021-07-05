@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BookResult, CountryResult } from '../book.model';
+import { BookData, BookResult, CountryResult } from '../book.model';
 
 export const BOOK_BASE_URL = new InjectionToken<string>('book api token');
 
@@ -14,6 +14,12 @@ export class BookApiService {
 
   getBookByName(name: string): Observable<BookResult> {
     return this.http.get<BookResult>(`${this.baseUrl}?q=${name}`);
+  }
+
+  getBookById(id: string): Observable<BookData> {
+    return this.http.get<BookData>(`${this.baseUrl}/${id}`);
+
+    // https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC?key=yourAPIKey
   }
 
   getCountry(code: string): Observable<CountryResult> {

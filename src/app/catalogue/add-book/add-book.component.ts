@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { EMPTY, forkJoin, from, Observable, of, Subject } from 'rxjs';
+import { forkJoin, Observable, of, Subject } from 'rxjs';
 import {
   catchError,
   finalize,
@@ -18,8 +18,7 @@ import {
   WhenToReadSelect,
   WHEN_TO_READ,
 } from '../catalogue.model';
-import { BookApiService } from '../services';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { BookApiService, FireApiService } from '../services';
 import { AuthService } from 'src/app/services/auth.service';
 // import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
@@ -64,7 +63,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
     private bookService: BookApiService,
     private loadingService: LoadingService,
     private storage: StorageService,
-    private store: AngularFirestore,
+    private fireApiService: FireApiService,
     private authService: AuthService,
     private toastr: ToastrService,
     private translateService: TranslateService
@@ -233,14 +232,13 @@ export class AddBookComponent implements OnInit, OnDestroy {
       whenToRead: value.whenToRead || '',
     };
 
-    // loading ar irtveba
     this.loadingService.start();
-    from(this.store.collection('catalogue').add(body))
+    this.fireApiService
+      .addBook(body)
       .pipe(finalize(() => this.loadingService.stop()))
       .subscribe(() => this.reset());
   }
 
-  // toastr: not styled
   private reset() {
     this._selectedBook = null;
     this.form.reset();
