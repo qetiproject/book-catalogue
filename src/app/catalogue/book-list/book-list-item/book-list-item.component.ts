@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BookListItem } from '../../book.model';
-import { BookApiService } from '../../services';
 
 @Component({
   selector: 'app-book-list-item',
@@ -10,11 +10,11 @@ import { BookApiService } from '../../services';
 export class BookListItemComponent implements OnInit {
   @Input() item: BookListItem;
 
-  constructor(private bookApiService: BookApiService) {}
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    // this.bookApiService
-    //   .getBookById(this.book.id)
-    //   .subscribe((x) => console.log(x));
+  ngOnInit(): void {}
+
+  goToDetails() {
+    this.router.navigate([`catalogue/${this.item.data.id}`]);
   }
 }

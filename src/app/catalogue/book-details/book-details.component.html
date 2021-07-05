@@ -1,0 +1,8 @@
+<button (click)="goBack()" class="btn btn-primary">Go back</button>
+
+<ng-container *ngIf="storeData$ | async" as sotreData>
+  {{ sotreData.review }}</ng-container
+>
+<ng-container *ngIf="bookData$ | async" as bookData>
+  {{ bookData | json }}
+</ng-container>

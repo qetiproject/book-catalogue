@@ -7,8 +7,11 @@ import { AddBookComponent } from './add-book/add-book.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookApiService, BOOK_BASE_URL, FireApiService } from './services';
 import { environment } from 'src/environments/environment';
-import { BookListComponent } from './book-list/book-list.component';
-import { BookListItemComponent } from './book-list/book-list-item/book-list-item.component';
+import {
+  BookDetailsComponent,
+  BookListComponent,
+  BookListItemComponent,
+} from '.';
 
 @NgModule({
   imports: [
@@ -25,6 +28,7 @@ import { BookListItemComponent } from './book-list/book-list-item/book-list-item
     BookListItemComponent,
     BookListComponent,
     BookListItemComponent,
+    BookDetailsComponent,
   ],
   providers: [
     BookApiService,

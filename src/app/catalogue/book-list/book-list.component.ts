@@ -37,4 +37,24 @@ export class BookListComponent implements OnInit {
       switchMap((data) => forkJoin(this.mapBookData(data)))
     );
   }
+
+  // private mapBookData(data: BookWithId[]) {
+  //   return data.map((d) =>
+  //     this.bookApiService.getBookById(d.id).pipe(
+  //       map<BookData, BookListItem>((book) => ({
+  //         data: d,
+  //         book,
+  //       }))
+  //     )
+  //   );
+  // }
+
+  // ngOnInit() {
+  //   this.books$ = this.fireApiService.getBooks().pipe(
+  //     finalize(() => this.loadingService.stop()),
+  //     switchMap((data) =>
+  //       forkJoin(this.mapBookData(data)).pipe(tap((x) => console.log(x)))
+  //     )
+  //   );
+  // }
 }

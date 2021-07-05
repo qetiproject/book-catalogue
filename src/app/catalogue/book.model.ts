@@ -28,6 +28,8 @@ export interface VolumeInfo {
   };
 }
 
+export type BookWithId = BookBody & { id: string};
+
 export interface SaleInfo {
   buyLink: string;
   isEbook: boolean;
@@ -71,6 +73,6 @@ export interface CountryResult {
 }
 
 export interface BookListItem {
-  data: BookBody;
+  data: BookWithId;
   book: BookData;
 }

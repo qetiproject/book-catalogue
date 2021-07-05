@@ -6,11 +6,15 @@
     <div class="card-body">
       <p class="h4">{{ item.book?.volumeInfo.title }}</p>
       <p class="card-text">
-        {{ item.book.volumeInfo.description }}
+        {{ item.book?.volumeInfo.description }}
       </p>
       <div class="d-flex justify-content-between align-items-center">
         <div class="btn-group">
-          <button type="button" class="btn btn-sm btn-outline-secondary">
+          <button
+            type="button"
+            (click)="goToDetails()"
+            class="btn btn-sm btn-outline-secondary"
+          >
             Details
           </button>
         </div>
