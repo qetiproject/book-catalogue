@@ -1,8 +1,9 @@
 <button (click)="goBack()" class="btn btn-primary">Go back</button>
 
-<ng-container *ngIf="storeData$ | async" as sotreData>
-  {{ sotreData.review }}</ng-container
+<ng-container *ngIf="storeData$ | async as storeData">
+  {{ storeData | json }}</ng-container
 >
-<ng-container *ngIf="bookData$ | async" as bookData>
-  {{ bookData | json }}
+<h2>Book Api:</h2>
+<ng-container *ngIf="bookData$ | async as bookData">
+  {{ bookData.items[0].volumeInfo | json }}
 </ng-container>

@@ -32,12 +32,12 @@ export class FireApiService {
       );
   }
 
-  getBook(name: string): Observable<BookBody> {
+  getBook(id: string): Observable<BookBody> {
     return this.store
       .collection<BookBody>('catalogue', (ref) =>
         ref.where('uid', '==', this.auth.userId)
       )
-      .doc(name)
+      .doc(id)
       .get()
       .pipe(map((res) => res.data()));
   }
