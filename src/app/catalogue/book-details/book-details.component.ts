@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { BookResult } from '../book.model';
+import { BookData, BookResult } from '../book.model';
 import { BookBody } from '../catalogue.model';
 import { BookApiService, FireApiService } from '../services';
 
@@ -13,20 +13,23 @@ import { BookApiService, FireApiService } from '../services';
 })
 export class BookDetailsComponent implements OnInit {
   storeData$: Observable<BookBody>;
-  bookData$: Observable<BookResult>;
+  bookData$: Observable<BookData>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private fireApiService: FireApiService,
+    private bookApiService: BookApiService,
     private router: Router
   ) {}
 
   private initBookDetails() {
-    const id = this.activatedRoute.snapshot.params['id'];
-    this.storeData$ = this.fireApiService.getBook(id);
+    const name = this.activatedRoute.snapshot.params['name'];
+    // this.storeData$ = this.fireApiService;
+    // .getBook(name)
     // .pipe(
     //   tap(
-    //     (book) =>this.bookData$= this.bookApiService.getBookById(book.id)
+    //     (book) =>
+    //       (this.bookData$ = this.bookApiService.getBookByName(book.title))
     //   )
     // );
   }

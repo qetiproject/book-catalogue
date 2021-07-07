@@ -12,14 +12,8 @@ export class BookApiService {
     private http: HttpClient
   ) {}
 
-  getBookByName(name: string): Observable<BookResult> {
+  getBooksByName(name: string): Observable<BookResult> {
     return this.http.get<BookResult>(`${this.baseUrl}?q=${name}`);
-  }
-
-  getBookById(id: string): Observable<BookData> {
-    return this.http.get<BookData>(`${this.baseUrl}/${id}`);
-
-    // https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC?key=yourAPIKey
   }
 
   getCountry(code: string): Observable<CountryResult> {

@@ -176,7 +176,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
         isEbook: book.items[0].saleInfo.isEbook,
         saleability: book.items[0].saleInfo.saleability,
       },
-      id: book.items[0].id,
+      // bookId: book.items[0].bookId,
     };
   }
 
@@ -184,7 +184,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
   fetchBook(name: string) {
     this.loadingService.start();
     this.bookService
-      .getBookByName(name)
+      .getBooksByName(name)
       .pipe(
         finalize(() => {
           this.loadingService.stop(), (this.searchKey = '');
@@ -224,7 +224,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
     const value = this.form.value;
 
     const body: BookBody = {
-      id: this._selectedBook.id,
+      title: this._selectedBook.volumeInfo.title,
       uid: this.authService.userId,
       rating: value.rating,
       review: value.review,

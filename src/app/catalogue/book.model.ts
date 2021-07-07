@@ -28,7 +28,7 @@ export interface VolumeInfo {
   };
 }
 
-export type BookWithId = BookBody & { id: string};
+export type BookWithId = BookBody & { id: string };
 
 export interface SaleInfo {
   buyLink: string;
@@ -37,7 +37,6 @@ export interface SaleInfo {
 }
 
 export interface Book {
-  id: string;
   accessInfo: {
     country: Country[];
     pdf: Pdf;
@@ -53,7 +52,6 @@ export interface BookResult {
 }
 
 export interface BookData {
-  id: string;
   accessInfo: AccessInfo;
   searchInfo: {
     textSnippet: string;
@@ -74,5 +72,5 @@ export interface CountryResult {
 
 export interface BookListItem {
   data: BookWithId;
-  book: BookData;
+  book: BookResult;
 }

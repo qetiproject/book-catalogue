@@ -37,7 +37,7 @@ export const WHEN_TO_READ: WhenToReadSelect[] = [
 export const RATINGS = [1, 2, 3, 4, 5];
 
 export interface BookBody {
-  id: string;
+  title: string;
   uid: string;
   rating: number;
   review: string;

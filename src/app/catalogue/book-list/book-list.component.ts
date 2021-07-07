@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
-import { finalize, map, switchMap } from 'rxjs/operators';
-import { LoadingService } from 'src/app/services/loading.service';
-import { BookData, BookListItem, BookResult } from '../book.model';
-import { BookBody } from '../catalogue.model';
+import { map, switchMap } from 'rxjs/operators';
+import { BookListItem, BookResult, BookWithId } from '../book.model';
 import { BookApiService, FireApiService } from '../services';
 
 @Component({
@@ -16,14 +14,13 @@ export class BookListComponent implements OnInit {
 
   constructor(
     private fireApiService: FireApiService,
-    private bookApiService: BookApiService,
-    private loadingService: LoadingService
+    private bookApiService: BookApiService
   ) {}
 
-  private mapBookData(data: BookBody[]) {
+  private mapBookData(data: BookWithId[]) {
     return data.map((d) =>
-      this.bookApiService.getBookById(d.id).pipe(
-        map<BookData, BookListItem>((book) => ({
+      this.bookApiService.getBooksByName(d.title).pipe(
+        map<BookResult, BookListItem>((book) => ({
           data: d,
           book,
         }))
@@ -32,29 +29,8 @@ export class BookListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.books$ = this.fireApiService.getBooks().pipe(
-      finalize(() => this.loadingService.stop()),
-      switchMap((data) => forkJoin(this.mapBookData(data)))
-    );
+    this.books$ = this.fireApiService
+      .getBooks()
+      .pipe(switchMap((data) => forkJoin(this.mapBookData(data))));
   }
-
-  // private mapBookData(data: BookWithId[]) {
-  //   return data.map((d) =>
-  //     this.bookApiService.getBookById(d.id).pipe(
-  //       map<BookData, BookListItem>((book) => ({
-  //         data: d,
-  //         book,
-  //       }))
-  //     )
-  //   );
-  // }
-
-  // ngOnInit() {
-  //   this.books$ = this.fireApiService.getBooks().pipe(
-  //     finalize(() => this.loadingService.stop()),
-  //     switchMap((data) =>
-  //       forkJoin(this.mapBookData(data)).pipe(tap((x) => console.log(x)))
-  //     )
-  //   );
-  // }
 }
