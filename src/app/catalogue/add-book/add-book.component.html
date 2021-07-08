@@ -9,34 +9,14 @@
 
   <div class="py-5">
     <div class="container d-flex justify-content-center flex-column w-100">
-      <div class="row d-flex justify-content-center">
-        <div class="search-form d-flex justify-content-center flex-column">
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="searchKey"
-            placeholder="{{ 'catalogue.add_book.ENTER_BOOK_NAME' | translate }}"
-          />
-          <button
-            class="btn btn-outline-secondary mt-2"
-            (click)="search(searchKey)"
-          >
-            {{ "catalogue.add_book.buttons.SEARCH" | translate }}
-          </button>
-          <div class="alert alert-danger mt-2" role="alert" *ngIf="hasError">
-            {{ "catalogue.errors.add_book.ENTER_BOOK_NAME" | translate }}
-          </div>
-        </div>
-      </div>
+      <app-book-search
+        (searchBook)="search($event)"
+        (fetchBookChange)="fetchBook($event)"
+        [searchKey]="searchKey"
+        [hasError]="hasError"
+        [lastThreeSearches]="lastThreeSearches"
+      ></app-book-search>
       <div class="row d-flex justify-content-center mt-2 flex-row mb-3">
-        <div class="d-flex justify-content-center">
-          <span
-            (click)="fetchBook(name)"
-            class="badge rounded-pill bg-success ms-1"
-            *ngFor="let name of lastThreeSearches"
-            >{{ name }}</span
-          >
-        </div>
         <div class="row" *ngIf="selectedBook">
           <h2>{{ selectedBook.volumeInfo.title }}</h2>
           <p>{{ selectedBook.volumeInfo.description }}</p>

@@ -11,6 +11,7 @@ import {
   BookDetailsComponent,
   BookListComponent,
   BookListItemComponent,
+  BookSearchComponent,
 } from '.';
 
 @NgModule({
@@ -29,6 +30,7 @@ import {
     BookListComponent,
     BookListItemComponent,
     BookDetailsComponent,
+    BookSearchComponent,
   ],
   providers: [
     BookApiService,
