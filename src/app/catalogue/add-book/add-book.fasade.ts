@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, finalize, map, switchMap } from 'rxjs/operators';
-import { EventBusService } from 'src/app/services/event-bus.service';
-import { LoadingService } from 'src/app/services/loading.service';
-import { environment } from 'src/environments/environment';
-import { Book, BookResult, Country } from '../book.model';
-import { BookBody } from '../catalogue.model';
+import { EventBusService, LoadingService } from 'src/app/services';
+import { Book, BookBody, BookResult, Country } from '../models';
 import { BookApiService, FireApiService } from '../services';
 import { AddBookStorage } from './add-book.storage';
 

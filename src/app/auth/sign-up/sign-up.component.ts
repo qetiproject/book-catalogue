@@ -3,8 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { from } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { AuthService } from 'src/app/services/auth.service';
-import { LoadingService } from 'src/app/services/loading.service';
+import { AuthService, LoadingService } from 'src/app/services';
 export interface SignUpForm {
   email: string;
   password: string;

@@ -3,8 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
-import { BookWithId } from '../book.model';
-import { BookBody } from '../catalogue.model';
+import { BookBody, BookWithId } from '../models';
 
 @Injectable({
   providedIn: 'root',

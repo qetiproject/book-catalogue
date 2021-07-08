@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { BookResult } from '../book.model';
-import { BookBody } from '../catalogue.model';
+import { BookResult, BookBody } from '../models';
 import { BookApiService, FireApiService } from '../services';
 
 @Component({

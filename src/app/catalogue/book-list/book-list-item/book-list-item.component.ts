@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BookListItem } from '../../book.model';
+import { BookListItem } from '../../models';
 
 @Component({
   selector: 'app-book-list-item',

@@ -2,20 +2,20 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Book, Country } from '../book.model';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 import {
+  Book,
   BookBody,
+  Country,
   RATINGS,
   Status,
   WhenToReadSelect,
   WHEN_TO_READ,
-} from '../catalogue.model';
-import { AuthService } from 'src/app/services/auth.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ToastrService } from 'ngx-toastr';
+} from '../models';
 import { AddBookFacade } from './add-book.fasade';
 import { AddBookStorage } from './add-book.storage';
-import { EventBusService } from 'src/app/services/event-bus.service';
+import { AuthService, EventBusService } from 'src/app/services';
 
 @Component({
   selector: 'app-add-book',

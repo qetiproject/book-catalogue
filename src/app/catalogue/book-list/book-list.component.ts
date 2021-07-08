@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { BookListItem, BookResult, BookWithId } from '../book.model';
+import { BookListItem, BookResult, BookWithId } from '../models';
 import { BookApiService, FireApiService } from '../services';
 
 @Component({

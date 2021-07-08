@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BookData, BookResult, CountryResult } from '../book.model';
+import { BookResult, CountryResult } from '../models';
 
 export const BOOK_BASE_URL = new InjectionToken<string>('book api token');
 
