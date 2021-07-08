@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
+import { LoadingService } from 'src/app/services';
 import { BookResult, BookBody } from '../models';
 import { BookApiService, FireApiService } from '../services';
 
@@ -18,19 +19,20 @@ export class BookDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private fireApiService: FireApiService,
     private bookApiService: BookApiService,
+    private loadingService: LoadingService,
     private router: Router
   ) {}
 
   private initBookDetails() {
     const id = this.activatedRoute.snapshot.params['id'];
-    this.storeData$ = this.fireApiService
-      .getBook(id)
-      .pipe(
-        tap(
-          (book) =>
-            (this.bookData$ = this.bookApiService.getBooksByName(book.title))
-        )
-      );
+    this.loadingService.start();
+    this.storeData$ = this.fireApiService.getBook(id).pipe(
+      tap(
+        (book) =>
+          (this.bookData$ = this.bookApiService.getBooksByName(book.title))
+      ),
+      finalize(() => this.loadingService.stop())
+    );
   }
 
   ngOnInit() {

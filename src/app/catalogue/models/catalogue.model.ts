@@ -44,3 +44,7 @@ export interface BookBody {
   status: Status;
   whenToRead: WhenToRead;
 }
+
+export enum EventBusEvenets {
+  RESETFORM = 'resetForm',
+}

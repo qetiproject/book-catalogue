@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { finalize, map, switchMap } from 'rxjs/operators';
+import { LoadingService } from 'src/app/services';
 import { BookListItem, BookResult, BookWithId } from '../models';
 import { BookApiService, FireApiService } from '../services';
 
@@ -14,7 +15,8 @@ export class BookListComponent implements OnInit {
 
   constructor(
     private fireApiService: FireApiService,
-    private bookApiService: BookApiService
+    private bookApiService: BookApiService,
+    private loadingService: LoadingService
   ) {}
 
   private mapBookData(data: BookWithId[]) {
@@ -29,8 +31,10 @@ export class BookListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.books$ = this.fireApiService
-      .getBooks()
-      .pipe(switchMap((data) => forkJoin(this.mapBookData(data))));
+    this.loadingService.start();
+    this.books$ = this.fireApiService.getBooks().pipe(
+      switchMap((data) => forkJoin(this.mapBookData(data))),
+      finalize(() => this.loadingService.stop())
+    );
   }
 }

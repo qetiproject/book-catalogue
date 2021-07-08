@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   bookApiBase: 'https://www.googleapis.com/books/v1/volumes',
+  countryApiBase: 'https://restcountries.eu/rest/v2/name',
+  countryFlagApi: 'https://www.countryflags.io',
   firebase: {
     apiKey: 'AIzaSyDrihQqSfhfL13HjdqnQDkGUxeVKPks4hw',
     authDomain: 'book-catalogue-5b145.firebaseapp.com',

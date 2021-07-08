@@ -8,6 +8,7 @@ import {
   Book,
   BookBody,
   Country,
+  EventBusEvenets,
   RATINGS,
   Status,
   WhenToReadSelect,
@@ -135,7 +136,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
       .valueChanges.pipe(takeUntil(this.unsubscribe$))
       .subscribe((status) => this.addControlsByStatus(status));
     this.eventBuService
-      .on('resetForm')
+      .on(EventBusEvenets.RESETFORM)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => this.reset());
   }

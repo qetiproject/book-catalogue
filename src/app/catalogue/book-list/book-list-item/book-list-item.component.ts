@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { BookListItem } from '../../models';
 
@@ -6,6 +11,7 @@ import { BookListItem } from '../../models';
   selector: 'app-book-list-item',
   templateUrl: './book-list-item.component.html',
   styleUrls: ['./book-list-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookListItemComponent implements OnInit {
   @Input() item: BookListItem;

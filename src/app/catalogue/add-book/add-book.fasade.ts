@@ -1,10 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, finalize, map, switchMap } from 'rxjs/operators';
 import { EventBusService, LoadingService } from 'src/app/services';
-import { Book, BookBody, BookResult, Country } from '../models';
+import {
+  Book,
+  BookBody,
+  BookResult,
+  Country,
+  EventBusEvenets,
+} from '../models';
 import { BookApiService, FireApiService } from '../services';
 import { AddBookStorage } from './add-book.storage';
+
+export const COUNTRY_FLAG_URL = new InjectionToken<string>(
+  'country flag api token'
+);
 
 @Injectable()
 export class AddBookFacade {
@@ -17,6 +27,7 @@ export class AddBookFacade {
     return this.addBookStorage.lastThreeSearches;
   }
   constructor(
+    @Inject(COUNTRY_FLAG_URL) private countryFlagApi: string,
     private loadingService: LoadingService,
     private bookService: BookApiService,
     private addBookStorage: AddBookStorage,
@@ -34,7 +45,11 @@ export class AddBookFacade {
           this.loadingService.stop(), (this.searchKey = '');
         }),
         switchMap((book) => {
-          const bookByName = book.items[0];
+          // error
+          // if (book?.items.length === 0) {
+          //   return of(null);
+          // }
+          const bookByName = book?.items[0];
           this.countries = [];
           this.countries.push(bookByName.accessInfo?.country);
           return forkJoin(
@@ -45,6 +60,8 @@ export class AddBookFacade {
         })
       )
       .subscribe((book) => (this._selectedBook = book));
+
+    // console.log(`${this.countryFlagApi}/${'GE'}/shiny/64.png`);
   }
 
   search(key: string) {
@@ -78,7 +95,8 @@ export class AddBookFacade {
   }
 
   getCountryFlag(code: string): string {
-    return `https://www.countryflags.io/${code}/shiny/64.png`;
+    return `${this.countryFlagApi}/${code}/shiny/64.png`;
+    // return `https://www.countryflags.io/${code}/shiny/64.png`;
   }
 
   private mapBook(book: BookResult, countries: Country[]): Book {
@@ -125,7 +143,7 @@ export class AddBookFacade {
       .pipe(finalize(() => this.loadingService.stop()))
       .subscribe(() => {
         this._selectedBook = null;
-        this.eventBuService.emit('resetForm');
+        this.eventBuService.emit(EventBusEvenets.RESETFORM);
       });
   }
 }

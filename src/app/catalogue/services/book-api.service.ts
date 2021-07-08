@@ -4,11 +4,13 @@ import { Observable } from 'rxjs';
 import { BookResult, CountryResult } from '../models';
 
 export const BOOK_BASE_URL = new InjectionToken<string>('book api token');
+export const COUNTRY_BASE_URL = new InjectionToken<string>('country api token');
 
 @Injectable()
 export class BookApiService {
   constructor(
     @Inject(BOOK_BASE_URL) private baseUrl: string,
+    @Inject(COUNTRY_BASE_URL) private countryApiBase: string,
     private http: HttpClient
   ) {}
 
@@ -18,7 +20,7 @@ export class BookApiService {
 
   getCountry(code: string): Observable<CountryResult> {
     return this.http.get<CountryResult>(
-      `https://restcountries.eu/rest/v2/name/${code}?fullText=true`
+      `${this.countryApiBase}/${code}?fullText=true`
     );
   }
 }
