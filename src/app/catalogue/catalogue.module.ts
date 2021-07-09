@@ -19,6 +19,7 @@ import {
   CatalogueComponent,
 } from '.';
 import { COUNTRY_FLAG_URL } from './add-book/add-book.fasade';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { COUNTRY_FLAG_URL } from './add-book/add-book.fasade';
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
   declarations: [
     CatalogueComponent,

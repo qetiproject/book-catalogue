@@ -1,19 +1,16 @@
 <main>
-  <section class="py-5 text-center middle">
+  <section class="py-5 text-center bgImg">
     <div class="col-lg-6 col-md-8 mx-auto">
-      <h1 class="fw-light text-white">Welcome to book Catalogue</h1>
+      <h1 class="fw-light text-white">
+        {{ "catalogue.WELCOME_TO_BOOKS_CATALOGUE" | translate }}
+      </h1>
       <p class="lead text-white">
-        You can add your favourite movies with rating and reviews.
+        {{ "catalogue.YOU_CAN_ADD_BOOK" | translate }}
       </p>
-      <p>
-        <a href="#" class="btn btn-outline-light" routerLink="add">{{
-          "catalogue.add_book.buttons.ADD" | translate
-        }}</a>
-      </p>
+      <button class="btn btn-success" routerLink="add">
+        {{ "catalogue.add_book.buttons.ADD" | translate }}
+      </button>
     </div>
   </section>
-
-  <section>
-    <app-book-list></app-book-list>
-  </section>
+  <app-book-list></app-book-list>
 </main>

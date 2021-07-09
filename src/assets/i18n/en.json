@@ -11,6 +11,10 @@
         "SIGN_OUT": "Sign Out"
     },
     "catalogue": {
+      "WELCOME_TO_BOOKs_CATALOGUE": "Welcome to books catalogue",
+      "YOU_CAN_ADD_BOOK": "You can add book in catalogue",
+      "MORE": "more",
+      "CATEGORY": "category:",
       "add_book": {
         "TITLE": "Add Book",
         "ENTER_BOOK_NAME": "Enter book name",

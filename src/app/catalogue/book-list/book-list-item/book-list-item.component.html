@@ -1,25 +1,22 @@
-<div class="col">
-  <div class="card shadow-sm">
-    <div class="movie-poster">
-      <img [src]="item.book.items[0].volumeInfo.imageLinks?.thumbnail" />
-    </div>
-    <div class="card-body">
-      <p class="h4">{{ item.book.items[0].volumeInfo.title }}</p>
-      <p class="card-text">
-        <!-- {{ item.data.review | json }} -->
-      </p>
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="btn-group">
-          <button
-            type="button"
-            (click)="goToDetails()"
-            class="btn btn-sm btn-outline-secondary"
-          >
-            Details
-          </button>
-        </div>
-        <small class="text-muted">9 mins</small>
-      </div>
-    </div>
+<div class="card">
+  <img
+    class="card-img-top img"
+    [src]="
+      item.book.items[0].volumeInfo.imageLinks?.thumbnail ||
+      '../../../../assets/img/No_Image_Available.jpg'
+    "
+  />
+  <div class="card-body">
+    <h5 class="card-title">{{ item.book.items[0].volumeInfo.title }}</h5>
+    <p class="card-text">
+      {{ item.book.items[0].searchInfo.textSnippet | slice: 1:100 }}
+    </p>
+    <button
+      type="button"
+      (click)="goToDetails()"
+      class="btn btn-sm btn-outline-success"
+    >
+      {{ "catalogue.MORE" | translate }}
+    </button>
   </div>
 </div>

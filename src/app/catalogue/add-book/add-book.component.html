@@ -1,14 +1,15 @@
-<main>
-  <section class="py-3 text-center middle">
-    <div class="col-lg-6 col-md-8 mx-auto">
-      <h1 class="fw-light text-white">
-        {{ "catalogue.add_book.TITLE" | translate }}
-      </h1>
-    </div>
+<div class="row m-0">
+  <section
+    class="col-mg-6 middle d-flex align-items-center justify-content-center"
+  >
+    <h1 class="text-white">
+      {{ "catalogue.add_book.TITLE" | translate }}
+    </h1>
   </section>
-
-  <div class="py-5">
-    <div class="container d-flex justify-content-center flex-column w-100">
+</div>
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-6 mt-3">
       <app-book-search
         (searchBook)="search($event)"
         (fetchBookChange)="fetchBook($event)"
@@ -16,112 +17,130 @@
         [hasError]="hasError"
         [lastThreeSearches]="lastThreeSearches"
       ></app-book-search>
-      <div class="row d-flex justify-content-center mt-2 flex-row mb-3">
-        <div class="row" *ngIf="selectedBook">
-          <h2>{{ selectedBook.volumeInfo.title }}</h2>
-          <p>{{ selectedBook.volumeInfo.description }}</p>
-          <img
-            [src]="selectedBook.volumeInfo.imageLinks.smallThumbnail"
-            alt="{{ selectedBook.volumeInfo.title }}"
-          />
-          <div *ngFor="let category of selectedBook.volumeInfo?.categories">
-            <p>category: {{ category }}</p>
-          </div>
-          <div *ngFor="let country of selectedBook.accessInfo.country">
-            <ng-container *ngIf="country">
-              <img
-                [src]="getCountryFlag(country.code)"
-                [title]="getCountryPopulation(country)"
-              />
-            </ng-container>
-          </div>
+    </div>
+  </div>
+</div>
+<main>
+  <div class="container">
+    <div
+      class="row d-flex justify-content-center mt-3 flex-row mb-3"
+      *ngIf="selectedBook"
+    >
+      <div class="col-md-4 col-lg-4 col-12 ml-1">
+        <img
+          [src]="
+            selectedBook.volumeInfo.imageLinks.smallThumbnail ||
+            '../../../../assets/img/No_Image_Available.jpg'
+          "
+        />
+        <div *ngFor="let country of selectedBook.accessInfo.country">
+          <ng-container *ngIf="country">
+            <img
+              style="width: 100px"
+              [src]="getCountryFlag(country.code)"
+              [title]="getCountryPopulation(country)"
+            />
+          </ng-container>
+        </div>
+        <div
+          *ngFor="let catalogue of selectedBook.volumeInfo?.categories"
+          class="mt-1"
+        >
+          <p>
+            <span>
+              <strong>{{ "catalogue.CATEGORY" | translate }} </strong></span
+            >
+            {{ catalogue }}
+          </p>
         </div>
       </div>
-      <div class="row" *ngIf="selectedBook">
-        <form [formGroup]="form">
-          <div class="row mb-3">
-            <label for="review" class="col-sm-2 col-form-label">
-              {{ "catalogue.add_book.REVIEW" | translate }}</label
-            >
-            <div class="col-sm-10">
-              <textarea
-                type="text"
-                class="form-control"
-                id="review"
-                formControlName="review"
-              ></textarea>
-            </div>
+      <div class="col-md-7 col-lg-7 col-12">
+        <h2>{{ selectedBook.volumeInfo.title }}</h2>
+        <p>{{ selectedBook.volumeInfo.description }}</p>
+      </div>
+      <form [formGroup]="form">
+        <div class="row mb-3">
+          <label for="review" class="col-sm-2 col-form-label">
+            {{ "catalogue.add_book.REVIEW" | translate }}</label
+          >
+          <div class="col-sm-10">
+            <textarea
+              type="text"
+              class="form-control"
+              id="review"
+              formControlName="review"
+            ></textarea>
           </div>
-          <div class="row mb-3">
-            <label for="rating" class="col-sm-2 col-form-label">
-              {{ "catalogue.add_book.RATING" | translate }}</label
-            >
-            <div class="col-sm-10">
-              <span class="ms-2" *ngFor="let rating of ratings">
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  [value]="rating"
-                  name="rating"
-                  formControlName="rating"
-                />
+        </div>
+        <div class="row mb-3">
+          <label for="rating" class="col-sm-2 col-form-label">
+            {{ "catalogue.add_book.RATING" | translate }}</label
+          >
+          <div class="col-sm-10 d-flex">
+            <div class="ms-2 rating-list" *ngFor="let rating of ratings">
+              <span
+                class="pl-3 selected"
+                (click)="countRating(rating)"
+                [ngClass]="{ selected: rating <= selectedRating }"
+              >
+                <i class="fas fa-star success"></i>
               </span>
             </div>
           </div>
-          <div class="row mb-3">
-            <label for="status" class="col-sm-2 col-form-label">
-              {{ "catalogue.add_book.STATUS" | translate }}</label
-            >
-            <div class="col-sm-10">
-              <select class="form-select" formControlName="status">
-                <option [value]="status.Read">
-                  {{ "catalogue.add_book.READ" | translate }}
-                </option>
-                <option [value]="status.ReadLater">
-                  {{ "catalogue.add_book.READ_LATER" | translate }}
-                </option>
-              </select>
-            </div>
+        </div>
+        <div class="row mb-3">
+          <label for="status" class="col-sm-2 col-form-label">
+            {{ "catalogue.add_book.STATUS" | translate }}</label
+          >
+          <div class="col-sm-10">
+            <select class="form-select" formControlName="status">
+              <option [value]="status.Read">
+                {{ "catalogue.add_book.READ" | translate }}
+              </option>
+              <option [value]="status.ReadLater">
+                {{ "catalogue.add_book.READ_LATER" | translate }}
+              </option>
+            </select>
           </div>
-          <div class="row mb-3" *ngIf="canReadLater">
-            <label for="status" class="col-sm-2 col-form-label">
-              {{ "catalogue.add_book.whenToRead.TITLE" | translate }}</label
-            >
-            <div class="col-sm-10">
-              <select class="form-select" formControlName="whenToRead">
-                <option [value]="null">
-                  {{ "catalogue.add_book.whenToRead.SELECT" | translate }}
-                </option>
-                <option
-                  [value]="whenToRead.value"
-                  *ngFor="let whenToRead of whenToRead"
-                >
-                  {{ whenToRead.label | translate }}
-                </option>
-              </select>
-            </div>
+        </div>
+        <div class="row mb-3" *ngIf="canReadLater">
+          <label for="status" class="col-sm-2 col-form-label">
+            {{ "catalogue.add_book.whenToRead.TITLE" | translate }}</label
+          >
+          <div class="col-sm-10">
+            <select class="form-select" formControlName="whenToRead">
+              <option [value]="null">
+                {{ "catalogue.add_book.whenToRead.SELECT" | translate }}
+              </option>
+              <option
+                [value]="whenToRead.value"
+                *ngFor="let whenToRead of whenToRead"
+              >
+                {{ whenToRead.label | translate }}
+              </option>
+            </select>
           </div>
-          <button type="submit" class="btn btn-primary" (click)="submit()">
-            {{ "catalogue.add_book.buttons.ADD" | translate }}
-          </button>
-          <ng-container *ngIf="submited && form.invalid">
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="form.controls.review?.errors?.required"
-            >
-              {{ "catalogue.errors.add_book.REVIEW_IS_REQUIRED" | translate }}
-            </div>
-            <div
-              class="alert alert-danger mt-2"
-              role="alert"
-              *ngIf="form.controls.review?.errors?.minlength"
-            >
-              {{ "catalogue.errors.add_book.REVIEW_LENGTH" | translate }}
-            </div>
-          </ng-container>
-        </form>
-      </div>
+        </div>
+        <button type="submit" class="btn btn-success" (click)="submit()">
+          {{ "catalogue.add_book.buttons.ADD" | translate }}
+        </button>
+        <ng-container *ngIf="submited && form.invalid">
+          <div
+            class="alert alert-danger mt-2"
+            role="alert"
+            *ngIf="form.controls.review?.errors?.required"
+          >
+            {{ "catalogue.errors.add_book.REVIEW_IS_REQUIRED" | translate }}
+          </div>
+          <div
+            class="alert alert-danger mt-2"
+            role="alert"
+            *ngIf="form.controls.review?.errors?.minlength"
+          >
+            {{ "catalogue.errors.add_book.REVIEW_LENGTH" | translate }}
+          </div>
+        </ng-container>
+      </form>
     </div>
   </div>
 </main>

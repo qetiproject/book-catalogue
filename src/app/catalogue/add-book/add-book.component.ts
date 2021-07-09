@@ -30,6 +30,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
   form: FormGroup;
   status = Status;
   submited = false;
+  selectedRating: number = 1;
 
   get selectedBook(): Book {
     return this.addBookFacade._selectedBook;
@@ -74,6 +75,10 @@ export class AddBookComponent implements OnInit, OnDestroy {
     private addBookFacade: AddBookFacade,
     private eventBuService: EventBusService
   ) {}
+
+  countRating(rating) {
+    this.selectedRating = rating;
+  }
 
   private createForm() {
     this.form = new FormGroup({
@@ -169,7 +174,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
     const body: BookBody = {
       title: this.selectedBook.volumeInfo.title,
       uid: this.authService.userId,
-      rating: value.rating,
+      rating: this.selectedRating,
       review: value.review,
       status: value.status,
       whenToRead: value.whenToRead || '',

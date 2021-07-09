@@ -1,6 +1,8 @@
 .middle {
   background-image: url("/assets/img/catalogue-bg.jpg");
   background-size: cover;
+  background-position: center;
+  height: 30vh;
 }
 
 main {
@@ -22,4 +24,8 @@ main {
 
 img {
   width: 300px;
+}
+
+.rating-list span.selected {
+  color: #198754 !important;
 }

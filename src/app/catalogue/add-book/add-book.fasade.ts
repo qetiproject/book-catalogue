@@ -60,8 +60,6 @@ export class AddBookFacade {
         })
       )
       .subscribe((book) => (this._selectedBook = book));
-
-    // console.log(`${this.countryFlagApi}/${'GE'}/shiny/64.png`);
   }
 
   search(key: string) {

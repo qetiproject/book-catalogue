@@ -1,7 +1,7 @@
 <header>
-  <div class="navbar navbar-dark bg-dark shadow-sm">
+  <div class="navbar navbar-dark bg-success shadow-sm">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center">
+      <a class="navbar-brand d-flex align-items-center" routerLink="/catalogue">
         <img src="../../../assets/img/logo.png" alt="logo" />
         <strong class="m-1">{{ "header.TITLE" | translate }}</strong>
       </a>
@@ -15,7 +15,11 @@
               {{ "auth.SIGN_UP" | translate }}
             </button>
           </ng-container>
-          <button *ngIf="isLoggedIn" (click)="signOut()" class="btn btn-danger">
+          <button
+            *ngIf="isLoggedIn"
+            (click)="signOut()"
+            class="btn btn-outline-light"
+          >
             {{ "auth.SIGN_OUT" | translate }}
           </button>
         </ng-container>
