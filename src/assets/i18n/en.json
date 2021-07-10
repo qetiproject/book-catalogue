@@ -8,13 +8,21 @@
         "EMAIL": "Email",
         "PASSWORD": "Password",
         "REPEAT_PASSWORD": "Repeat password",
-        "SIGN_OUT": "Sign Out"
+        "SIGN_OUT": "Sign Out",
+        "errors": {
+          "EMAIL_IS_REQUIRED":"Email is required",
+          "PASSWORD_IS_REQUIRED":" Password is required",
+          "REPEAT_PASSWORD_IS_REQUIRED": "Repeat password is required"
+        }
     },
     "catalogue": {
-      "WELCOME_TO_BOOKs_CATALOGUE": "Welcome to books catalogue",
-      "YOU_CAN_ADD_BOOK": "You can add book in catalogue",
+      "WELCOME_TO_BOOKS_CATALOGUE": "Welcome to book catalogue",
+      "YOU_CAN_ADD_BOOK": "You can add a book in catalogue",
       "MORE": "more",
       "CATEGORY": "category:",
+      "PUBLISHED_DATE": "Published date:",
+      "PAGES": "Pages:",
+      "POPULATION_OF":"Population of",
       "add_book": {
         "TITLE": "Add Book",
         "ENTER_BOOK_NAME": "Enter book name",

@@ -49,6 +49,7 @@ export interface Book {
 
 export interface BookResult {
   items: Array<BookData>;
+  totalItems: number;
 }
 
 export interface BookData {

@@ -1,4 +1,5 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, finalize, map, switchMap } from 'rxjs/operators';
 import { EventBusService, LoadingService } from 'src/app/services';
@@ -32,10 +33,10 @@ export class AddBookFacade {
     private bookService: BookApiService,
     private addBookStorage: AddBookStorage,
     private fireApiService: FireApiService,
-    private eventBuService: EventBusService
+    private eventBuService: EventBusService,
+    private translateService: TranslateService
   ) {}
 
-  //TODO: make error handly
   fetchBook(name: string) {
     this.loadingService.start();
     this.bookService
@@ -45,10 +46,9 @@ export class AddBookFacade {
           this.loadingService.stop(), (this.searchKey = '');
         }),
         switchMap((book) => {
-          // error
-          // if (book?.items.length === 0) {
-          //   return of(null);
-          // }
+          if (!book.totalItems) {
+            return of(null);
+          }
           const bookByName = book?.items[0];
           this.countries = [];
           this.countries.push(bookByName.accessInfo?.country);
@@ -94,7 +94,6 @@ export class AddBookFacade {
 
   getCountryFlag(code: string): string {
     return `${this.countryFlagApi}/${code}/shiny/64.png`;
-    // return `https://www.countryflags.io/${code}/shiny/64.png`;
   }
 
   private mapBook(book: BookResult, countries: Country[]): Book {
@@ -131,7 +130,9 @@ export class AddBookFacade {
   }
 
   getCountryPopulation(country: Country): string {
-    return `Popultion of ${country.code}: ${country.population}`;
+    return `${this.translateService.instant('catalogue.POPULATION_OF')} ${
+      country.code
+    }: ${country.population}`;
   }
 
   submit(body: BookBody) {

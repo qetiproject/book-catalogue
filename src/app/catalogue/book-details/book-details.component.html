@@ -1,9 +1,91 @@
-<button (click)="goBack()" class="btn btn-primary">Go back</button>
+<div class="container mt-3">
+  <ng-container *ngIf="bookData$ | async as bookData">
+    <div class="row">
+      <div class="col-md-5 col-lg-5 col-xl-4 col-sm-12">
+        <img [src]="bookData.items[0].volumeInfo.imageLinks.thumbnail" />
+        <p>
+          <span
+            ><strong>{{ "catalogue.PAGES" | translate }}</strong></span
+          >
+          {{ bookData.items[0].volumeInfo.pageCount }}
+        </p>
+        <p>
+          <span
+            ><strong>{{ "catalogue.PUBLISHED_DATE" | translate }}</strong></span
+          >{{ bookData.items[0].volumeInfo.publishedDate }}
+        </p>
+        <div class="d-flex">
+          <span
+            ><strong>{{ "catalogue.CATEGORY" | translate }}</strong></span
+          >
+          <p *ngFor="let item of bookData.items[0].volumeInfo.categories">
+            {{ item }}
+          </p>
+        </div>
+      </div>
+      <div class="col-md-7 col-lg-7 col-xl-8 col-sm-12">
+        <h1>{{ bookData.items[0].volumeInfo.title }}</h1>
+        <h2>by: {{ bookData.items[0].volumeInfo.publisher }}</h2>
+        <p>{{ bookData.items[0].volumeInfo.description }}</p>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="storeData$ | async as storeData">
+    <div class="row">
+      <div class="col-12">
+        <div>
+          <span
+            ><strong
+              >{{ "catalogue.add_book.REVIEW" | translate }}:</strong
+            ></span
+          >
+          {{ storeData.review }}
+        </div>
+        <div class="d-flex">
+          <span
+            ><strong
+              >{{ "catalogue.add_book.STATUS" | translate }}:</strong
+            ></span
+          >
+          <p *ngIf="storeData.status == status.Read">
+            {{ "catalogue.add_book.READ" | translate }}
+          </p>
+          <p *ngIf="storeData.status == status.ReadLater">
+            {{ "catalogue.add_book.READ_LATER" | translate }}
+          </p>
+        </div>
+        <div *ngIf="storeData.whenToRead" class="d-flex">
+          <span
+            ><strong
+              >{{ "catalogue.add_book.whenToRead.TITLE" | translate }}:</strong
+            ></span
+          >
+          <div *ngFor="let item of whenToRead">
+            <p *ngIf="storeData.whenToRead == item.value">
+              {{ item.label | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="d-flex">
+          <span
+            ><strong
+              >{{ "catalogue.add_book.RATING" | translate }}:</strong
+            ></span
+          >
+          <div class="ms-2 rating-list" *ngFor="let rating of ratings">
+            <span
+              class="pl-3 selected"
+              [ngClass]="{ selected: rating <= storeData.rating }"
+            >
+              <i class="fas fa-star success"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 
-<ng-container *ngIf="storeData$ | async as storeData">
-  {{ storeData | json }}</ng-container
->
-<h2>Book Api:</h2>
-<ng-container *ngIf="bookData$ | async as bookData">
-  {{ bookData.items[0].volumeInfo | json }}
-</ng-container>
+  <button (click)="goBack()" class="btn btn-success mt-3">
+    <i class="fas fa-arrow-left"></i>
+  </button>
+</div>

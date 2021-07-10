@@ -39,14 +39,14 @@
           role="alert"
           *ngIf="form.controls.email?.errors?.required"
         >
-          იმეილი სავალდებულოა
+          {{ "auth.errors.EMAIL_IS_REQUIRED" | translate }}
         </div>
         <div
           class="alert alert-danger mt-1"
           role="alert"
           *ngIf="form.controls.password?.errors?.required"
         >
-          პაროლი სავალდებულოა
+          {{ "auth.errors.PASSWORD_IS_REQUIRED" | translate }}
         </div>
       </ng-container>
     </form>

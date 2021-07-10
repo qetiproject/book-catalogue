@@ -8,13 +8,22 @@
         "EMAIL": "ელ-ფოსტა",
         "PASSWORD": "პაროლი",
         "REPEAT_PASSWORD": "გაიმეორეთ პაროლი",
-        "SIGN_OUT": "გამოსვლა"
+        "SIGN_OUT": "გამოსვლა",
+        "errors": {
+          "EMAIL_IS_REQUIRED":"იმეილი სავალდებულოა",
+          "PASSWORD_IS_REQUIRED":" პაროლი სავალდებულოა",
+          "REPEAT_PASSWORD_IS_REQUIRED": "პაროლის განმეორება სავალდებულოა"
+        }
+
     },
     "catalogue": {
-      "WELCOME_TO_BOOKS_CATALOGUE": "კეთილი იყოს თქვენი მობრძანება წიგნების კატალოგში",
+      "WELCOME_TO_BOOKS_CATALOGUE": "კეთილი იყოს თქვენი მობრძანება წიგნის კატალოგში",
       "YOU_CAN_ADD_BOOK": "თქვენ შეგიძლიათ დაამატოთ წიგნი კატალოგში",
       "MORE": "მეტის ნახვა",
       "CATEGORY": "კატეგორია:",
+      "PUBLISHED_DATE": "გამოქვეყვნების თარიღი:",
+      "PAGES": "გვერდები:",
+      "POPULATION_OF":"მოსახლეობა",
       "add_book": {
         "TITLE": "წიგნის დამატება",
         "ENTER_BOOK_NAME": "შეიყვანეთ წიგნის სახელი",

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { LoadingService } from 'src/app/services';
-import { BookResult, BookBody } from '../models';
+import { BookResult, BookBody, WHEN_TO_READ, Status, RATINGS } from '../models';
 import { BookApiService, FireApiService } from '../services';
 
 @Component({
@@ -14,6 +14,11 @@ import { BookApiService, FireApiService } from '../services';
 export class BookDetailsComponent implements OnInit {
   storeData$: Observable<BookBody>;
   bookData$: Observable<BookResult>;
+  whenToRead = WHEN_TO_READ;
+  status = Status;
+  get ratings(): number[] {
+    return RATINGS;
+  }
 
   constructor(
     private activatedRoute: ActivatedRoute,
